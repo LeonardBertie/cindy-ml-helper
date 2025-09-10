@@ -193,7 +193,7 @@ if st.session_state.user is None:
                 st.error(f"注册失败: {getattr(res, 'error', '未知错误')}")
         except Exception as e:
             st.error(f"注册异常: {e}")
-    st.info("请在邮箱查收确认邮件，点击后完成注册")
+    st.info("请在邮箱查收确认邮件，在邮箱点击确认按钮后无需等待页面加载完成即可完成注册")
 
     st.subheader("登录")
     login_email = st.text_input("邮箱（登录）", key="login_email")
@@ -270,11 +270,7 @@ else:
          st.dataframe(df_progress)
 
  else:
-    # 定义左右两栏
-  left_col, right_col = st.columns([2, 1])  # 左边 2/3，右边 1/3
-  # 3. 左边：主体阅读页面
-  with left_col:
-        # 普通用户
+   st.success(f"用户ID: {st.session_state.user_id}，角色: {st.session_state.role}")
    pages = ["主页","引言：什么是人工智能", "认识鸢尾花数据集",
                  "将你的数据划分为训练集和测试集", "读取数据的完整代码",
                  "模型1:KNN","分类任务的课后习题讨论","模型2:决策树",
@@ -284,13 +280,48 @@ else:
         # 初始化 completed（加载用户进度）
    if "completed" not in st.session_state:
           st.session_state.completed = load_user_progress(st.session_state.user_id, pages)
-   page = st.sidebar.radio(
+   with st.sidebar:
+    page = st.radio(
             "选择页面",
             pages,
             format_func=lambda x: f"✅ {x}" if st.session_state.completed.get(x, False) else x
-   )
+    )
+    st.markdown("---")  # 分隔线
 
-   st.success(f"用户ID: {st.session_state.user_id}，角色: {st.session_state.role}")
+    # DeepSeek 助手
+    st.header("💬 DeepSeek 助手")
+
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    # 输入框
+    user_question = st.text_area("请输入问题：", key="user_input", height=100)
+
+    # 提交按钮
+    if st.button("🚀 提交问题", key="submit_btn"):
+        if user_question.strip():
+            # 每次只保留最新的问答
+            st.session_state.messages = [
+                {"role": "user", "content": user_question}
+            ]
+
+            with st.spinner("正在思考中..."):
+                response = client.chat.completions.create(
+                    model="deepseek-chat",
+                    messages=st.session_state.messages,
+                    temperature=0.7
+                )
+            answer = response.choices[0].message.content
+
+            # 覆盖，只保留最新回答
+            st.session_state.messages.append({"role": "assistant", "content": answer})
+
+    # 展示最新的一问一答
+    if st.session_state.messages:
+        for msg in st.session_state.messages:
+            st.chat_message(msg["role"]).write(msg["content"])
+
+   
 
    # 页面0：主页
    if page == "主页":
@@ -2916,34 +2947,4 @@ else:
             mark_progress(st.session_state.user_id, page)
             st.success(f"已完成 {page}")
             st.rerun()  # 点击标记后刷新页面显示 ✅
-  with right_col:
-    st.header("💬 DeepSeek 助手")
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-
-    # 输入框
-    user_question = st.text_area("请输入问题：", key="user_input", height=100)
-
-    # 提交按钮
-    if st.button("🚀 提交问题", key="submit_btn"):
-     if user_question.strip():
-        # 每次只保留最新的问答
-        st.session_state.messages = [
-            {"role": "user", "content": user_question}
-        ]
-
-        with st.spinner("正在思考中..."):
-            response = client.chat.completions.create(
-                model="deepseek-chat",
-                messages=st.session_state.messages,
-                temperature=0.7
-            )
-        answer = response.choices[0].message.content
-
-        # 覆盖，只保留最新回答
-        st.session_state.messages.append({"role": "assistant", "content": answer})
-
-# 展示最新的一问一答
-    if st.session_state.messages:
-     for msg in st.session_state.messages:
-        st.chat_message(msg["role"]).write(msg["content"])
+  
