@@ -26,10 +26,11 @@ from supabase import create_client
 from dotenv import load_dotenv
 client = OpenAI(
     base_url="https://api.deepseek.com",
-    api_key=st.secrets["DEEPSEEK_API_KEY"] # 在 .streamlit/secrets.toml 配置
+    api_key=st.secrets["DEEPSEEK_API_KEY"]# 在 .streamlit/secrets.toml 配置
 )
 
 load_dotenv()  # 本地开发用 .env
+
 
 SUPABASE_URL = st.secrets["SUPABASE_URL"]
 SUPABASE_ANON_KEY =st.secrets["SUPABASE_ANON_KEY"] 
@@ -282,9 +283,9 @@ else:
           st.session_state.completed = load_user_progress(st.session_state.user_id, pages)
    with st.sidebar:
     page = st.radio(
-            "选择页面",
-            pages,
-            format_func=lambda x: f"✅ {x}" if st.session_state.completed.get(x, False) else x
+        "选择页面",
+        pages,
+        format_func=lambda x: f"✅ {x}" if st.session_state.completed.get(x, False) else x
     )
     st.markdown("---")  # 分隔线
 
@@ -294,16 +295,12 @@ else:
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
-    # 输入框
+    # ========== 用户输入框 ==========
     user_question = st.text_area("请输入问题：", key="user_input", height=100)
 
-    # 提交按钮
     if st.button("🚀 提交问题", key="submit_btn"):
         if user_question.strip():
-            # 每次只保留最新的问答
-            st.session_state.messages = [
-                {"role": "user", "content": user_question}
-            ]
+            st.session_state.messages = [{"role": "user", "content": user_question}]
 
             with st.spinner("正在思考中..."):
                 response = client.chat.completions.create(
@@ -312,14 +309,54 @@ else:
                     temperature=0.7
                 )
             answer = response.choices[0].message.content
-
-            # 覆盖，只保留最新回答
             st.session_state.messages.append({"role": "assistant", "content": answer})
 
-    # 展示最新的一问一答
+    # ========== 随机推荐问题 ==========
+    import random
+    all_questions = [
+        "什么是监督学习？",
+        "如何划分训练集和测试集？",
+        "什么是过拟合？",
+        "KNN 算法的原理是什么？",
+        "什么是混淆矩阵？",
+        "如何选择合适的机器学习模型？",
+        "决策树是如何进行分类的？",
+        "随机森林的优势是什么？",
+        "朴素贝叶斯为什么叫“朴素”？",
+        "准确率、精确率、召回率、F1 值分别代表什么？",
+        "什么是 Bagging？什么是 Boosting？",
+        " 什么是集成学习？",
+        "什么是 stacking 模型？"
+       "为什么准确率有时候不是一个好的评价指标？"
+    ]
+
+    # 初始化推荐问题
+    if "question_batch" not in st.session_state:
+        st.session_state.question_batch = random.sample(all_questions, 3)
+
+    st.subheader("🎲 推荐问题")
+    for q in st.session_state.question_batch:
+        if st.button(f"❓ {q}", key=f"preset_{q}"):
+            st.session_state.messages = [{"role": "user", "content": q}]
+
+            with st.spinner("正在思考中..."):
+                response = client.chat.completions.create(
+                    model="deepseek-chat",
+                    messages=st.session_state.messages,
+                    temperature=0.7
+                )
+            answer = response.choices[0].message.content
+            st.session_state.messages.append({"role": "assistant", "content": answer})
+
+    # “换一批”按钮（只更新推荐问题，不清空对话）
+    if st.button("🔄 换一批推荐问题"):
+        st.session_state.question_batch = random.sample(all_questions, 3)
+        st.rerun()
+
+# ========== 展示最新一问一答（在主页面展示） ==========
     if st.session_state.messages:
-        for msg in st.session_state.messages:
-            st.chat_message(msg["role"]).write(msg["content"])
+     for msg in st.session_state.messages:
+        st.chat_message(msg["role"]).write(msg["content"])
 
    
 
