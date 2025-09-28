@@ -1658,12 +1658,7 @@ else:
         st.write(confusion_matrix(st.session_state["y_test"], y_pred_best))
         st.subheader("✅ 准确率")
         st.write(round(accuracy_score(st.session_state["y_test"], y_pred_best), 2))
-    st.info("完成所有内容后请点击：")
-    if st.button("已完成"):
-     user_client = make_user_client(st.session_state.access_token)
-     save_page_progress(user_client, st.session_state.user.id, page, True)
-     st.session_state.completed[page] = True
-     st.rerun()
+    
   # 页面8：模型训练
    elif page == "模型3:支持向量机":
     st.title("模型3 支持向量机")
@@ -2254,7 +2249,7 @@ else:
         st.write(clf_NB.predict_proba(st.session_state.X_test[:5]))
      else:
         st.error("⚠ 请先点击『5. 模型预测』")
-    st.info("完成所有内容后请点击：")
+   
 
   # 页面10：模型训练
    elif page == "模型5:多层感知机":
