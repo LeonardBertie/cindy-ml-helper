@@ -407,6 +407,13 @@ else:
     st_highlight("feature=iris_datas.data")
     st_highlight("label=iris_datas.target ")
     st.write("【请尝试读入这个数据集吧，其中的特征用feature表示，标签用label表示】")
+    st.subheader("🎲 推荐问题")
+    if st.button("请给我讲讲以上代码"):
+      st.write("1")
+    if st.button("这个数据集是从哪里来的？"):
+      st.write("2")
+
+    st.subheader("[查看代码运行结果]")
     if st.button("运行代码"):
     # 读入鸢尾花数据集
      iris_datas = datasets.load_iris()
@@ -449,7 +456,7 @@ else:
     st.write("numpy.ndarray（形状为(150,4)）。")
     st.subheader("如果我想查看前5个样本的特征")
     st.write("print(feature[:5])#查看前5个样本的特征")
-    st.image("https://i.postimg.cc/pLYgvD9H/7.png")
+    st.image("https://i.postimg.cc/BQtbLBkn/16.png")
     st.write("这里涉及到python的一个基本语法：array[start:stop:step]")
     st.image("https://i.postimg.cc/RCKd2vJr/8.png")
     st.write("feature[:5]表示从0开始，到5结束，步长为默认值1")
@@ -471,6 +478,13 @@ else:
     st_highlight("import numpy as np")
     st_highlight("indics=np.arange(feature.shape[0])#生成索引序列")
     st_highlight("X_train_ind,X_test_ind,X_train,X_test=train_test_split(indics,feature,test_size=0.2,random_state=42)")
+    st.subheader("🎲 推荐问题")
+    if st.button("这段代码是什么意思"):
+      st.write("1")
+    if st.button("为什么要划分测试集和训练集"):
+      st.write("2")
+
+    st.subheader("[查看代码运行结果]")
     if st.button("划分数据集和测试集"):
     # 读入鸢尾花数据集
      iris_datas = datasets.load_iris()
@@ -528,6 +542,11 @@ else:
     st.write("【python】")
     st_highlight("Y_train=label[X_train_ind]")
     st_highlight("Y_test=label[X_test_ind]")
+    st.subheader("🎲 推荐问题")
+    if st.button("请给我解释一下以上代码"):
+      st.write("1")
+
+    st.subheader("[查看代码运行结果]")
     if st.button("根据特征提取对应标签"):
     # 1. 读入鸢尾花数据集
      iris_datas = datasets.load_iris()
@@ -587,6 +606,7 @@ else:
     st.write("【注意】#X_train_ind,X_test_ind,X_train,X_test=train_test_split(indics,feature,test_size=0.2,random_state=42)")
     st.write("X_train1,X_test,Y_train1,Y_test1=train_test_split(feature,label,test_size=0.2,random_state=42)")
     st.write("这种方法也可以得到Y_train和Y_test，但是输出的变量个数只能是4个，不能同时输出索引值")
+    st.subheader("[查看代码运行结果]")
     if st.button("运行完整代码"):
     # 1. 读入鸢尾花数据集
      iris_datas = datasets.load_iris()
@@ -630,6 +650,13 @@ else:
     st_highlight("data=pd.read_csv('iris.csv')")
     st_highlight("#检查数据前几行，确保正确读取")
     st_highlight("print(data.head())")
+    st.subheader("🎲 推荐问题")
+    if st.button("这几句代码是什么意思"):
+      st.write("1")
+    if st.button("为什么要引入panda"):
+      st.write("2")
+    st.subheader("[查看代码运行结果]")
+
     if st.button("读取导入的鸢尾花数据集csv文件"):
      # 1. 自动生成鸢尾花数据集 DataFrame
      iris = datasets.load_iris()
@@ -670,6 +697,9 @@ else:
     st_highlight("y_numeric[i]=1")
     st_highlight("elif y_array[i]=='virginica':")
     st_highlight("y_numeric[i]=2")
+    st.subheader("[🎲 推荐问题]")
+    if st.button("方法1这段代码是什么意思"):
+      st.write("1")
     st.write("━━━━━━━━━━━━━━━━━━")
     st_highlight("#方法2:使用pandasfactorize")
     st_highlight("#y_int64,classes=pd.factorize(y)#factorize按首次出现的顺序排序")
@@ -677,6 +707,9 @@ else:
     st_highlight("#划分训练集和测试集")
     st_highlight("#通常使用80%训练，20%测试，随机种子设为42以保证可重复性")
     st_highlight("X_train,X_test,y_train,y_test=train_test_split(X_array,y_numeric,test_size=0.2,random_state=42)")
+    st.subheader("[🎲 推荐问题]")
+    if st.button("方法2这段代码是什么意思"):
+      st.write("1")
     st.write("     ")
     st.write("结果已经非常好看了")
     st.image("https://i.postimg.cc/VNg1KQqn/20.png")
@@ -733,7 +766,10 @@ else:
     st_highlight("#通常使用80%训练，20%测试，随机种子设为42以保证可重复性")
     st_highlight("from sklearn.model_selection import train_test_split")
     st_highlight("X_train,X_test,y_train,y_test=train_test_split(features,labels,test_size=0.2,random_state=42)")
- 
+    st.subheader("🎲 推荐问题")
+    if st.button("解释一下以上代码"):
+      st.write("1")
+    
   # 页面5：模型训练
    elif page == "模型1:KNN":
     st.write("机器学习方法根据任务不同，主要有有监督学习、无监督学习、半监督学习和强化学习。")
@@ -775,7 +811,8 @@ else:
     st_highlight("clf_KNN=KNeighborsClassifier(n_neighbors=5)#建立一个模型框架")
     st_highlight("clf_KNN.fit(X_train,Y_train)#代入数据训练")
     st.write("训练完毕，输出一个训练好的模型对象")
-    st.image("https://i.postimg.cc/8zf3BcW9/3.png")
+    st.image("https://i.postimg.cc/GmQ5Wv3W/13.png")
+    st.subheader("[查看代码运行结果]")
     if st.button("运行 KNN 模型训练"):
     # 训练模型
      iris = load_iris()
@@ -791,7 +828,8 @@ else:
     st.subheader("【python】")
     st_highlight("KNN_pred=clf_KNN.predict(X_test)")
     st.write("预测的结果储存在KNN_pred这个变量中，得到了针对测试集的30个样本的输出")
-    st.image("https://i.postimg.cc/KcVD7NNc/4.png")
+    st.image("https://i.postimg.cc/ZYpVk6VF/14.png")
+    st.subheader("[查看代码运行结果]")
     if st.button("预测结果"):
     # 训练模型
      iris = load_iris()
@@ -805,7 +843,8 @@ else:
     st.write("在python中，也可以输出计算结果的预测概率，有时候这个概率值很有用~~")
     st_highlight("#输出计算结果的概率值")
     st_highlight("KNN_pred_proba=clf_KNN.predict_proba(X_test)")
-    st.image("https://i.postimg.cc/5yw52cFP/5.png")
+    st.image("https://i.postimg.cc/wvKLFG8g/15.png")
+    st.subheader("[查看代码运行结果]")
     if st.button("预测概率"):
     # 训练模型
      iris = load_iris()
@@ -830,7 +869,8 @@ else:
     st_highlight("print('KNN的准确率:',round(acc_KNN,2))")
     st.write("在Python中，round(acc_KNN,2)是一个函数调用，用于将变量acc_KNN的值四舍五入到小数点后两位。")
     st.write("输出结果为：")
-    st.image("https://i.postimg.cc/vBpFdnWr/6.png")
+    st.image("https://i.postimg.cc/02mgB6wv/12.png")
+    st.subheader("[查看代码运行结果]")
     if st.button("点击计算准确率"):
     # 训练模型
      iris = load_iris()
@@ -848,9 +888,10 @@ else:
     st_highlight("    accnum_KNN=accnum_KNN+1")
     st_highlight("print('KNN的准确率:',round(accnum_KNN/Y_test.shape[0],2))")
     st.write("输出结果为：")
-    st.image("https://i.postimg.cc/pd2SNZ3b/7.png")
+    st.image("https://i.postimg.cc/T3msCBF4/11.png")
     st.write("这里的1.0说明，准确率100%了。")
-    if st.button("硬核手工算"):
+    st.subheader("[查看代码运行结果]")
+    if st.button("点击进行硬核手工算"):
     # 训练模型
      iris = load_iris()
      X_train, X_test, Y_train, Y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42)
@@ -893,6 +934,7 @@ else:
     st_highlight("print(KNN_matrix)")
     st.write("输出结果为：")
     st.image("https://i.postimg.cc/j2d8md1H/10.png")
+    st.subheader("[查看代码运行结果]")
     if st.button("训练并显示 KNN 混淆矩阵"):
      iris = load_iris()
      X_train, X_test, Y_train, Y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42)
@@ -911,7 +953,7 @@ else:
      st.write(KNN_matrix)
     st.image("https://i.postimg.cc/1tMBG1zf/11.png")
     st.write("对于一个已知的混淆矩阵，横坐标是真实类别，纵坐标是预测的类别。我们希望除了对角线之外，其他的地方都是0（如下图所示）。因此通过对比python给出的混淆矩阵，也可以间接判断出哪种方法效果更好。")
-    st.image("https://i.postimg.cc/HL99m1XB/12.png")
+    st.image("https://i.postimg.cc/FzCtXcVC/10.png")
     st.subheader("测试：请在已知混淆矩阵的基础上，计算每个类别的查准率和查全率。")
     st.write("根据概念——")
     st.write("查准率PrecisionRate：也称为准确率，预测出数量中的正确值")
@@ -930,7 +972,8 @@ else:
     st_highlight("print('第三种鸢尾花的查全率：',round(KNN_matrix[2,2]/row_sums[2],2))")
     st_highlight("print('第三种鸢尾花的查准率：',round(KNN_matrix[2,2]/colm_sums[2],2))")
     st.write("输出结果为：")
-    st.image("https://i.postimg.cc/fTHy0zQ6/14.png")
+    st.image("https://i.postimg.cc/mDNRJtq2/9.png")
+    st.subheader("[查看代码运行结果]")
     if st.button("训练并计算查准率/查全率"):
      iris = load_iris()
      X_train, X_test, Y_train, Y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42)
@@ -1259,7 +1302,7 @@ else:
     st.write("这些是一些基本的占位符格式，可以根据需要进行组合使用，以实现更复杂的字符串格式化。")
     st.write("所以根据上述占位符，我们也可以将输出简化为：")
     st_highlight("print('KNN在红酒数据集上的准确率为：{:.2%}'.format(acc_KNN))")
-    st.image("https://i.postimg.cc/h4QYZQWS/9.png")
+    st.image("https://i.postimg.cc/151wDT0K/8.png")
     st.write("一样可以获得理想的结果，注意这时候准确率就不要×100了")
 
   # 页面7：模型训练
@@ -1300,7 +1343,7 @@ else:
     st_highlight("#5.训练决策树模型")
     st_highlight("dt_model.fit(X_train,y_train)")
     st.write("分类报告的结果")
-    st.image("https://i.postimg.cc/15hDXFWG/2.png")
+    st.image("https://i.postimg.cc/g29hGh5c/7.png")
     if st.button("训练决策树模型"):
      # 加载数据
      iris_data = load_iris()
@@ -1347,7 +1390,7 @@ else:
     st.write("​​recall(召回率)：实际为正的样本中被正确预测的比例")
     st.write("​​f1-score：精确率和召回率的调和平均")
     st.write("​​support：该类别的样本数量")
-    st.image("https://i.postimg.cc/QxhVvJ4y/3.png")
+    st.image("https://i.postimg.cc/k53vYz9f/6.png")
     st.write("已知混淆矩阵的情况下，你还记得怎么计算吗？")
     st.write("【查全率看行，查全率看列】")
     st.image("https://i.postimg.cc/rFfy3XtD/4.png")
@@ -1626,8 +1669,8 @@ else:
     st.title("模型3 支持向量机")
     st.write("支持向量机是以统计学习理论为基础，1995年被提出的一种适用性广泛的机器学习算法，它在解决小样本、非线性及高维模式识别中表现出特有的优势。支持向量机将向量映射到一个更高维的空间中，在这个空间中建立一个最大间隔的超平面，建立方向合适的分割超平面使得两个与之平行的超平面间的距离最大化。其假定为，平行超平面间的距离或差距越大，分类器的总误差越小。")
     st.image("https://i.postimg.cc/RFLPq7kq/1.png")
-    st.image("https://i.postimg.cc/7ZjtRY1P/9.png")
-    st.image("https://i.postimg.cc/50V7x7kZ/10.png")
+    st.image("https://i.postimg.cc/NG7S686D/4.png")
+    st.image("https://i.postimg.cc/KcHv2yWw/5.png")
     st.image("https://i.postimg.cc/prVsj9vC/2.png")
     st.write("想象厨房台面上随意摆放着形状各异的饼干，有圆形的巧克力饼干和方形的苏打饼干，此时用一把菜刀很难将它们彻底分开。​")
     st.write("SVM的神奇之处在于，它会把这些饼干“抛”到空中。当饼干悬浮在空中时，原本二维平面上纠缠的饼干突然有了高度这个新维度，这时只需要水平挥动一块平板，就能干净利落地把圆形饼干“托”在平板上方，方形饼干留在平板下方。而那些恰好碰到平板边缘的饼干，就是关键的“支持向量”，它们决定了平板的位置和角度。")
@@ -2217,7 +2260,7 @@ else:
    elif page == "模型5:多层感知机":
     st.title("模型5 多层感知机")
     st.write("多层感知机是我们在大一期间就带大家练习过的方法，典型的感知机结构为只有输入层、隐藏层与输出层的3层网络，也被称为BP神经网络。")
-    st.image("https://i.postimg.cc/PrZ9GT8K/15.png")
+    st.image("https://i.postimg.cc/4Ndx9xDr/2.png")
     st.subheader("【概念解释】")
     st.write("多层感知机（MLP）和反向传播（BP）神经网络有着紧密的联系。MLP是一种前馈人工神经网络模型，由输入层、多个隐藏层和输出层组成，层与层之间通过神经元相互连接。而BP神经网络并不是一种特定的网络结构，它是一种用于训练多层神经网络的算法，能够有效解决多层神经网络中权值调整的问题。")
     st.write("MLP是网络的架构，定义了网络的层次结构和神经元连接方式；")
@@ -2469,7 +2512,7 @@ else:
     st_highlight("plt.grid(True)")
     st_highlight("plt.show()")
     st.write("输出效果，感觉还不错")
-    st.image("https://i.postimg.cc/65nZC1Dy/17.png")
+    st.image("https://i.postimg.cc/bJx9kTts/3.png")
     st.title(" 拓展🌸 MLP 分类器实验：绘制训练集和测试集的损失曲线")
 
  # 1. 加载数据
@@ -2896,7 +2939,7 @@ else:
     st_highlight("disp(['StackingAccuracy='num2str(accuracy)]);")
     st_highlight("con_stack=confusionmat(y_test,y_stack)")
     st.write("结果看上去也很不错")
-    st.image("https://i.postimg.cc/bN490tCw/24.png")
+    st.image("https://i.postimg.cc/XqWyW6X6/1.png")
     st.title("🤖 Stacking 分类器 ")
     if st.button("1️⃣ 加载数据并划分训练/测试集"):
      iris = datasets.load_iris()
